@@ -20,25 +20,21 @@ struct playerType {
     string rushingYards;
 };
 
-void readFile(playerType footballTeam[], ifstream& inFile){
+void readFile(playerType footballTeam[], ifstream& inFile, const int SIZE){
     string line;
     bool check = false;
     string lastName;
-    int i = 0;
     inFile.open ("output.txt");
     if (inFile.is_open()) {
     while (!inFile.eof()) {
-        while(getline( inFile >> ws, footballTeam[i].name, ',' ) >> footballTeam[i].lastName >> footballTeam[i].pos >> footballTeam[i].touchDowns >> footballTeam[i].passingYards >> footballTeam[i].recievingYards >> footballTeam[i].rushingYards) {
-            cout << "hello";
-            //lastName = footballTeam[i].name + footballTeam[i].lastName;
-           // footballTeam[i].name = lastName;
-            i++;
+        for(int i = 0; i < SIZE; i++) {
+            getline( inFile >> ws, footballTeam[i].name, ',' ) >> footballTeam[i].lastName >> footballTeam[i].pos >> footballTeam[i].touchDowns >> footballTeam[i].catches >> footballTeam[i].passingYards >> footballTeam[i].recievingYards >> footballTeam[i].rushingYards;
         }
-        inFile.close();
+
         }
     }
     //getline
-    cout << "test";
+    inFile.close();
 };
 void writeFile(ofstream& outFile){
     outFile.open ("output.txt");
@@ -105,12 +101,18 @@ int main() {
     
     const int SIZE = 10;
     playerType footballTeam[SIZE];
-    readFile(footballTeam, inFile);
+    readFile(footballTeam, inFile, SIZE);
     cout << "hello";
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < SIZE; i++) {
     cout << footballTeam[i].name << endl;
     cout << footballTeam[i].lastName << endl;
-    }
+    cout << footballTeam[i].pos << endl;
+    cout << footballTeam[i].touchDowns << endl;
+    cout << footballTeam[i].catches << endl;
+    cout << footballTeam[i].passingYards << endl;
+    cout << footballTeam[i].recievingYards << endl;
+    cout << footballTeam[i].rushingYards << endl;
+    };
     
 
 
