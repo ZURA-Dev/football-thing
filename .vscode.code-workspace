@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.gradle": "gradle",
+			"iostream": "cpp",
+			"ostream": "cpp",
+			"istream": "cpp",
+			"cstdlib": "cpp",
+			"iomanip": "cpp",
+			"*.tcc": "cpp",
+			"fstream": "cpp",
+			"iosfwd": "cpp"
+		}
+	}
+}
