@@ -22,23 +22,23 @@ struct playerType {
 
 void readFile(playerType footballTeam[], ifstream& inFile){
     string line;
+    bool check = false;
     string lastName;
     int i = 0;
     inFile.open ("output.txt");
     if (inFile.is_open()) {
     while (!inFile.eof()) {
         while(getline( inFile >> ws, footballTeam[i].name, ',' ) >> footballTeam[i].lastName >> footballTeam[i].pos >> footballTeam[i].touchDowns >> footballTeam[i].passingYards >> footballTeam[i].recievingYards >> footballTeam[i].rushingYards) {
-            footballTeam[i].lastName.resize(footballTeam[i].lastName.size() - 1);
+            cout << "hello";
             //lastName = footballTeam[i].name + footballTeam[i].lastName;
            // footballTeam[i].name = lastName;
             i++;
         }
+        inFile.close();
         }
-    }else {
-        cout << "cannot open file, invalid file" << endl;
     }
     //getline
-    inFile.close();
+    cout << "test";
 };
 void writeFile(ofstream& outFile){
     outFile.open ("output.txt");
@@ -106,6 +106,7 @@ int main() {
     const int SIZE = 10;
     playerType footballTeam[SIZE];
     readFile(footballTeam, inFile);
+    cout << "hello";
     for (int i = 0; i < 10; i++) {
     cout << footballTeam[i].name << endl;
     cout << footballTeam[i].lastName << endl;
