@@ -51,7 +51,14 @@ void writeFile(ofstream &outFile, playerType footballTeam[], const int SIZE)
     {
         for (int i = 0; i < SIZE; i++)
         {
-            outFile << footballTeam[i].lastName << ", " << footballTeam[i].name << " " << footballTeam[i].pos << " " << footballTeam[i].touchDowns << " " << footballTeam[i].catches << " " << footballTeam[i].passingYards << " " << footballTeam[i].recievingYards << " " << footballTeam[i].rushingYards << endl;
+            outFile << footballTeam[i].lastName << ", " << endl;
+            outFile << footballTeam[i].name << " " << endl;
+            outFile << footballTeam[i].pos << " " << endl;
+            outFile << footballTeam[i].touchDowns << " " << endl;
+            outFile << footballTeam[i].catches << " " << endl;
+            outFile << footballTeam[i].passingYards << " " << endl;
+            outFile << footballTeam[i].recievingYards << " " << endl;
+            outFile << footballTeam[i].rushingYards << endl;
         }
     }
     else
@@ -62,127 +69,157 @@ void writeFile(ofstream &outFile, playerType footballTeam[], const int SIZE)
     outFile.close();
 };
 
-int lookUpPlayer(playerType footballTeam[], const int SIZE)
+int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
 {
     bool found;
-    int pos = 0;
-    do {
-    string temp_name;
-    string temp_lastName;
-    pos = 0;
-    found = false;
-    int choice = 0;
-    cout << "\033c";
-    cout << "Enter first/last name of player to look up" << endl;
-    cout << "first: ";
-    getline(cin, temp_name);
-    cout << "last: ";
-    getline(cin, temp_lastName);
-    
-    for (int i = 0; i < SIZE; i++)
+    int choice;
+    int pos;
+    do
     {
-        if (footballTeam[i].name == temp_name && footballTeam[i].lastName == temp_lastName)
-        {
-            pos = i;
-            cout << "found! " << endl;
-            found = true;
-        }
-    }
-    cout << "not found" << endl;
-    cin >> choice;
-    if (choice == 0) {
-        return 0;
-    }
-    system("pause");
-    }while(found == false);
-    if (found == false) {
-        cout << "not found // returning" << endl;
-    }
+        string temp_name;
+        string temp_lastName;
+        found = false;
+        cout << "\033c";
+        cout << "Enter first/last name of player to look up" << endl;
+        cout << "first: ";
+        getline(cin, temp_name);
+        cout << "last: ";
+        getline(cin, temp_lastName);
 
-    if (found == true) {
-        return pos;
-    } else {
-        return -1;
-    }
-}
-void editPlayer(ofstream &outFile, playerType footballTeam[], const int SIZE)
-{
- 
-    int pos = 0;
-    int choice = 0;
-    
-        pos = lookUpPlayer(footballTeam, SIZE);
-        cout << pos << endl;
-        do
+        for (int i = 0; i < SIZE; i++)
         {
-            cout << "1. Edit Name" << setw(60) << footballTeam[pos].lastName << "," <<footballTeam[pos].name << endl;
-            cout << "2. Edit Position" << endl;
-            cout << "3. Edit Number of Touch Downs" << endl;
-            cout << "4. Edit Number of Catches" << endl;
-            cout << "5. Edit Number of Passing Yards" << endl;
-            cout << "6. Edit Number of Recieving Yards" << endl;
-            cout << "7. Edit Number of Rushing Yards" << endl;
+            if (footballTeam[i].name == temp_name && footballTeam[i].lastName == temp_lastName)
+            {
+                pos = i;
+                found = true;
+            }
+        }
+        if (found == false)
+        {
+            cout << "not found" << endl;
+            cout << "1. Retry" << endl;
+            cout << "2. Quit to menu: " << endl;
+            cout << "Enter:" << endl;
             cin >> choice;
             cin.clear();
-        cin.ignore();
-
+            cin.ignore(25, '\n');
             switch (choice)
             {
             case 0:
-                break;
+                cout << "error" << endl;
             case 1:
-                cout << "Edit First Name: " << endl;
-                getline(cin, footballTeam[pos].name);
-                cout << "Edit last Name" << endl;
-                getline(cin, footballTeam[pos].lastName);
                 break;
             case 2:
-                cout << "Edit position: " << endl;
-                getline(cin, footballTeam[pos].pos);
-                break;
-            case 3:
-                cout << "Edit Number of Touch Downs: " << endl;
-
-                getline(cin, footballTeam[pos].touchDowns);
-                break;
-            case 4:
-                cout << "Edit Catches: " << endl;
-
-                getline(cin, footballTeam[pos].catches);
-                break;
-            case 5:
-                cout << "Edit Passing Yards: " << endl;
-
-                getline(cin, footballTeam[pos].passingYards);
-                break;
-            case 6:
-                cout << "Edit Receiving Yards: " << endl;
-
-                getline(cin, footballTeam[pos].recievingYards);
-                break;
-            case 7:
-                cout << "Edit Rushing Yards: " << endl;
-
-                getline(cin, footballTeam[pos].rushingYards);
+                if (choice == 2)
+                {
+                    ifExit = true;
+                    return 0;
+                }
                 break;
             default:
-                cout << "\t\tInvalid Input. Press enter to continue..." << endl;
-                cin.ignore();
-                break;
+                cout << "error";
             }
-        } while (choice != 8);
+        }
+
+    } while (found == false);
+
+    if (found == true)
+    {
+        cout << "\033c";
+        cout << "found! " << endl;
+        system("pause");
+        return pos;
     }
+    else
+    {
+        return -1;
+    }
+}
+void editPlayer(ofstream &outFile, playerType footballTeam[], const int SIZE, bool ifExit)
+{
+cout << "\033c";
+    int pos = 0;
+    int choice = 0;
+    ifExit = false;
+
+    pos = lookUpPlayer(footballTeam, SIZE, ifExit);
+    if (ifExit == true)
+    {
+        return;
+    }
+    cout << pos << endl;
+    do
+    {
+        cout << "\033c";
+        cout << "1. Edit Name" << setw(60) << footballTeam[pos].lastName << "," << footballTeam[pos].name << endl;
+        cout << "2. Edit Position" << endl;
+        cout << "3. Edit Number of Touch Downs" << endl;
+        cout << "4. Edit Number of Catches" << endl;
+        cout << "5. Edit Number of Passing Yards" << endl;
+        cout << "6. Edit Number of Recieving Yards" << endl;
+        cout << "7. Edit Number of Rushing Yards" << endl;
+        cin >> choice;
+        cin.clear();
+        cin.ignore();
+
+        switch (choice)
+        {
+        case 0:
+            break;
+        case 1:
+            cout << "Edit First Name: " << endl;
+            getline(cin, footballTeam[pos].name);
+            cout << "Edit last Name" << endl;
+            getline(cin, footballTeam[pos].lastName);
+            break;
+        case 2:
+            cout << "Edit position: " << endl;
+            getline(cin, footballTeam[pos].pos);
+            break;
+        case 3:
+            cout << "Edit Number of Touch Downs: " << endl;
+
+            getline(cin, footballTeam[pos].touchDowns);
+            break;
+        case 4:
+            cout << "Edit Catches: " << endl;
+
+            getline(cin, footballTeam[pos].catches);
+            break;
+        case 5:
+            cout << "Edit Passing Yards: " << endl;
+
+            getline(cin, footballTeam[pos].passingYards);
+            break;
+        case 6:
+            cout << "Edit Receiving Yards: " << endl;
+
+            getline(cin, footballTeam[pos].recievingYards);
+            break;
+        case 7:
+            cout << "Edit Rushing Yards: " << endl;
+
+            getline(cin, footballTeam[pos].rushingYards);
+            break;
+        default:
+            cout << "\t\tInvalid Input. Press enter to continue..." << endl;
+            cin.ignore();
+            break;
+        }
+    } while (choice != 8);
+}
 void printTeamRoster(playerType footballTeam[])
 {
     cout << "\033c";
 };
-void menu(playerType footballTeam[], const int SIZE, ofstream &outFile, bool &ifRunned)
+void menu(playerType footballTeam[], const int SIZE, ofstream &outFile, bool ifExit)
 {
+    cout << "\033c";
     int choice = 0;
     do
     {
         cout << "\033c";
-        //  system("CLS");
+        cout << "\033c";
         const int WIDTH = 80;
         cout << fixed << showpoint << setprecision(2);
         cout << setfill('*') << setw(WIDTH) << "*" << endl;
@@ -256,10 +293,10 @@ void menu(playerType footballTeam[], const int SIZE, ofstream &outFile, bool &if
             cout << "invalid" << endl;
             break;
         case 1:
-            lookUpPlayer(footballTeam, SIZE);
+            lookUpPlayer(footballTeam, SIZE, ifExit);
             break;
         case 2:
-            editPlayer(outFile, footballTeam, SIZE);
+            editPlayer(outFile, footballTeam, SIZE, ifExit);
             break;
         case 3:
             printTeamRoster(footballTeam);
@@ -270,6 +307,7 @@ void menu(playerType footballTeam[], const int SIZE, ofstream &outFile, bool &if
         default:
             cout << "invalid" << endl;
         };
+        cout << "\033c";
     } while (choice != 4);
 };
 
@@ -278,11 +316,15 @@ int main()
     ofstream outFile;
     ifstream inFile;
     const int SIZE = 10;
+    bool ifExit = false;
     playerType footballTeam[SIZE];
     readFile(footballTeam, inFile, SIZE);
-    // menu(footballTeam, SIZE, outFile);
-    lookUpPlayer(footballTeam, SIZE);
-    //editPlayer(outFile, footballTeam, SIZE);
+    // cin >> footballTeam[1].lastName;
+    // cin >> footballTeam[1].name;
+    // writeFile(outFile, footballTeam, SIZE);
+    menu(footballTeam, SIZE, outFile, ifExit);
+    // lookUpPlayer(footballTeam, SIZE);
+    // editPlayer(outFile, footballTeam, SIZE, ifExit);
 
     return 0;
 }
