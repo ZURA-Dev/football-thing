@@ -1,12 +1,9 @@
-#include <algorithm>
-#include <cstring>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <stdlib.h>
-#include <string>
-#include <cctype>
 
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <fstream>
+#include <cctype>
 using namespace std;
 
 struct playerType
@@ -68,12 +65,20 @@ void writeFile(ofstream &outFile, playerType footballTeam[], const int SIZE)
 
     outFile.close();
 };
-
+string toLowerString(string &word)
+{
+    for (size_t i = 0; i < word.length(); i++)
+    {
+        word[i] = tolower(word[i]);
+    }
+    return word;
+}
 int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
 {
     bool found;
     int choice;
     int pos;
+    playerType tempFootball[SIZE];
     do
     {
         string temp_name;
@@ -83,12 +88,22 @@ int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
         cout << "Enter first/last name of player to look up" << endl;
         cout << "first: ";
         getline(cin, temp_name);
+        toLowerString(temp_name);
         cout << "last: ";
         getline(cin, temp_lastName);
+        toLowerString(temp_lastName); 
 
         for (int i = 0; i < SIZE; i++)
         {
-            if (footballTeam[i].name == temp_name && footballTeam[i].lastName == temp_lastName)
+            tempFootball[i].name = footballTeam[i].name;
+            tempFootball[i].lastName = footballTeam[i].lastName;
+            tempFootball[i].name[i] = tolower(tempFootball[i].name[i]);
+            tempFootball[i].lastName[i] = tolower(tempFootball[i].lastName[i]);
+        }
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            if (tempFootball[i].name == temp_name && tempFootball[i].lastName == temp_lastName)
             {
                 pos = i;
                 found = true;
@@ -96,6 +111,7 @@ int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
         }
         if (found == false)
         {
+            cout << "\033c";
             cout << "not found" << endl;
             cout << "1. Retry" << endl;
             cout << "2. Quit to menu: " << endl;
@@ -128,6 +144,7 @@ int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
         cout << "\033c";
         cout << "found! " << endl;
         system("pause");
+        cout << "\033c";
         return pos;
     }
     else
@@ -137,7 +154,6 @@ int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
 }
 void editPlayer(ofstream &outFile, playerType footballTeam[], const int SIZE, bool ifExit)
 {
-cout << "\033c";
     int pos = 0;
     int choice = 0;
     ifExit = false;
@@ -151,13 +167,15 @@ cout << "\033c";
     do
     {
         cout << "\033c";
-        cout << "1. Edit Name" << setw(60) << footballTeam[pos].lastName << "," << footballTeam[pos].name << endl;
+        cout << "1. Edit Name" << setw(20) << footballTeam[pos].lastName << "," << footballTeam[pos].name << endl;
         cout << "2. Edit Position" << endl;
         cout << "3. Edit Number of Touch Downs" << endl;
         cout << "4. Edit Number of Catches" << endl;
         cout << "5. Edit Number of Passing Yards" << endl;
         cout << "6. Edit Number of Recieving Yards" << endl;
         cout << "7. Edit Number of Rushing Yards" << endl;
+        cout << "8. Back to menu" << endl;
+        cout << "Enter Choice: ";
         cin >> choice;
         cin.clear();
         cin.ignore();
@@ -167,43 +185,53 @@ cout << "\033c";
         case 0:
             break;
         case 1:
+        cout << "\033c";
             cout << "Edit First Name: " << endl;
             getline(cin, footballTeam[pos].name);
             cout << "Edit last Name" << endl;
             getline(cin, footballTeam[pos].lastName);
             break;
         case 2:
+        cout << "\033c";
             cout << "Edit position: " << endl;
             getline(cin, footballTeam[pos].pos);
             break;
         case 3:
+        cout << "\033c";
             cout << "Edit Number of Touch Downs: " << endl;
 
             getline(cin, footballTeam[pos].touchDowns);
             break;
         case 4:
+        cout << "\033c";
             cout << "Edit Catches: " << endl;
 
             getline(cin, footballTeam[pos].catches);
             break;
         case 5:
+        cout << "\033c";
             cout << "Edit Passing Yards: " << endl;
 
             getline(cin, footballTeam[pos].passingYards);
             break;
         case 6:
+        cout << "\033c";
             cout << "Edit Receiving Yards: " << endl;
 
             getline(cin, footballTeam[pos].recievingYards);
             break;
         case 7:
+        cout << "\033c";
             cout << "Edit Rushing Yards: " << endl;
 
             getline(cin, footballTeam[pos].rushingYards);
             break;
+        case 8:
+            return;
+            break;
         default:
+        cout << "\033c";
             cout << "\t\tInvalid Input. Press enter to continue..." << endl;
-            cin.ignore();
             break;
         }
     } while (choice != 8);
@@ -296,13 +324,39 @@ void menu(playerType footballTeam[], const int SIZE, ofstream &outFile, bool ifE
             lookUpPlayer(footballTeam, SIZE, ifExit);
             break;
         case 2:
+            cout << "\033c";
             editPlayer(outFile, footballTeam, SIZE, ifExit);
             break;
         case 3:
             printTeamRoster(footballTeam);
             break;
         case 4:
-            cout << "exited program" << endl;
+            int save;
+            do
+            {
+                cout << "\033c";
+                cout << "Do you wish to save before exiting?" << endl;
+                cout << "1. Return back to menu" << endl;
+                cout << "2. Save to file" << endl;
+                cout << "3. Exit" << endl;
+                cout << "Enter: ";
+                int save;
+                cin >> save;
+                cin.clear();
+                cin.ignore();
+                switch (save)
+                {
+                case 1:
+                    menu(footballTeam, SIZE, outFile, ifExit);
+                case 2:
+                    writeFile(outFile, footballTeam, SIZE);
+                    return;
+                case 3:
+                    return;
+                default:
+                    cout << "invalid" << endl;
+                };
+            } while (save != 3);
             break;
         default:
             cout << "invalid" << endl;
