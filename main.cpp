@@ -92,7 +92,7 @@ int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
         toLowerString(temp_name);
         cout << "last: ";
         getline(cin, temp_lastName);
-        toLowerString(temp_lastName); 
+        toLowerString(temp_lastName);
 
         for (int i = 0; i < SIZE; i++)
         {
@@ -187,43 +187,43 @@ void editPlayer(ofstream &outFile, playerType footballTeam[], const int SIZE, bo
         case 0:
             break;
         case 1:
-        cout << "\033c";
+            cout << "\033c";
             cout << "Edit First Name: " << endl;
             getline(cin, footballTeam[pos].name);
             cout << "Edit last Name" << endl;
             getline(cin, footballTeam[pos].lastName);
             break;
         case 2:
-        cout << "\033c";
+            cout << "\033c";
             cout << "Edit position: " << endl;
             getline(cin, footballTeam[pos].pos);
             break;
         case 3:
-        cout << "\033c";
+            cout << "\033c";
             cout << "Edit Number of Touch Downs: " << endl;
 
             getline(cin, footballTeam[pos].touchDowns);
             break;
         case 4:
-        cout << "\033c";
+            cout << "\033c";
             cout << "Edit Catches: " << endl;
 
             getline(cin, footballTeam[pos].catches);
             break;
         case 5:
-        cout << "\033c";
+            cout << "\033c";
             cout << "Edit Passing Yards: " << endl;
 
             getline(cin, footballTeam[pos].passingYards);
             break;
         case 6:
-        cout << "\033c";
+            cout << "\033c";
             cout << "Edit Receiving Yards: " << endl;
 
             getline(cin, footballTeam[pos].recievingYards);
             break;
         case 7:
-        cout << "\033c";
+            cout << "\033c";
             cout << "Edit Rushing Yards: " << endl;
 
             getline(cin, footballTeam[pos].rushingYards);
@@ -232,7 +232,7 @@ void editPlayer(ofstream &outFile, playerType footballTeam[], const int SIZE, bo
             return;
             break;
         default:
-        cout << "\033c";
+            cout << "\033c";
             cout << "\t\tInvalid Input. Press enter to continue..." << endl;
             break;
         }
@@ -243,8 +243,9 @@ void printTeamRoster(playerType footballTeam[], const int SIZE)
     cout << "\033c";
     int W = 20;
     cout << setfill(' ');
-    cout << left << "Name" << setw(W + 7) << "Pos" << setw(W) << "TDs" << setw(W) << "Catches" << setw(W) << "Pass Yds" << setw(W) << "Recv Yds" << setw(W) << "Rush YDS"<< endl;
-    for (int i = 0; i < SIZE; i++) {
+    cout << left << "Name" << setw(W + 7) << "Pos" << setw(W) << "TDs" << setw(W) << "Catches" << setw(W) << "Pass Yds" << setw(W) << "Recv Yds" << setw(W) << "Rush YDS" << endl;
+    for (int i = 0; i < SIZE; i++)
+    {
         cout << "------------------" << endl;
         cout << left << setw(10) << footballTeam[i].lastName << ", " << left << setw(W) << footballTeam[i].name << left << setw(W) << footballTeam[i].pos << left << setw(W) << footballTeam[i].catches << left << setw(W) << footballTeam[i].passingYards << left << setw(W) << footballTeam[i].recievingYards << left << setw(W) << footballTeam[i].rushingYards << endl;
     }
@@ -339,7 +340,7 @@ void menu(playerType footballTeam[], const int SIZE, ofstream &outFile, bool ifE
             editPlayer(outFile, footballTeam, SIZE, ifExit);
             break;
         case 3:
-             cout << "\033c";
+            cout << "\033c";
             printTeamRoster(footballTeam, SIZE);
             break;
         case 4:
