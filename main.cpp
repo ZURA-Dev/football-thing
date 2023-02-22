@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <cctype>
+
 using namespace std;
 
 struct playerType
@@ -167,6 +168,7 @@ void editPlayer(ofstream &outFile, playerType footballTeam[], const int SIZE, bo
     do
     {
         cout << "\033c";
+        cout << setfill(' ');
         cout << "1. Edit Name" << setw(20) << footballTeam[pos].lastName << "," << footballTeam[pos].name << endl;
         cout << "2. Edit Position" << endl;
         cout << "3. Edit Number of Touch Downs" << endl;
@@ -236,9 +238,18 @@ void editPlayer(ofstream &outFile, playerType footballTeam[], const int SIZE, bo
         }
     } while (choice != 8);
 }
-void printTeamRoster(playerType footballTeam[])
+void printTeamRoster(playerType footballTeam[], const int SIZE)
 {
     cout << "\033c";
+    int W = 20;
+    cout << setfill(' ');
+    cout << left << "Name" << setw(W + 7) << "Pos" << setw(W) << "TDs" << setw(W) << "Catches" << setw(W) << "Pass Yds" << setw(W) << "Recv Yds" << setw(W) << "Rush YDS"<< endl;
+    for (int i = 0; i < SIZE; i++) {
+        cout << "------------------" << endl;
+        cout << left << setw(10) << footballTeam[i].lastName << ", " << left << setw(W) << footballTeam[i].name << left << setw(W) << footballTeam[i].pos << left << setw(W) << footballTeam[i].catches << left << setw(W) << footballTeam[i].passingYards << left << setw(W) << footballTeam[i].recievingYards << left << setw(W) << footballTeam[i].rushingYards << endl;
+    }
+    cout << endl;
+    system("pause");
 };
 void menu(playerType footballTeam[], const int SIZE, ofstream &outFile, bool ifExit)
 {
@@ -328,7 +339,8 @@ void menu(playerType footballTeam[], const int SIZE, ofstream &outFile, bool ifE
             editPlayer(outFile, footballTeam, SIZE, ifExit);
             break;
         case 3:
-            printTeamRoster(footballTeam);
+             cout << "\033c";
+            printTeamRoster(footballTeam, SIZE);
             break;
         case 4:
             int save;
