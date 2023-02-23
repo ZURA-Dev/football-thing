@@ -104,11 +104,6 @@ int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
             tempFootball[i].name = toLowerString(footballTeam[i].name);
             tempFootball[i].lastName = toLowerString(footballTeam[i].lastName);
         }
-        cout << tempFootball[1].name << endl;
-        cout << temp_name << endl;
-        cout << tempFootball[1].lastName << endl;
-        cout << temp_lastName << endl;
-        system("pause");
 
         for (int i = 0; i < SIZE; i++)
         {
@@ -150,7 +145,7 @@ int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
 
     if (found == true)
     {
-        cout << "\033c";
+        
         cout << "found! " << endl;
         system("pause");
         cout << "\033c";
@@ -163,10 +158,10 @@ int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
 }
 void editPlayer(ofstream &outFile, playerType footballTeam[], const int SIZE, bool ifExit)
 {
+    cout << "\033c";
     int pos = 0;
     int choice = 0;
     ifExit = false;
-
     pos = lookUpPlayer(footballTeam, SIZE, ifExit);
     if (ifExit == true)
     {
@@ -175,17 +170,70 @@ void editPlayer(ofstream &outFile, playerType footballTeam[], const int SIZE, bo
     cout << pos << endl;
     do
     {
-        cout << "\033c";
-        cout << setfill(' ');
-        cout << "1. Edit Name" << setw(20) << footballTeam[pos].lastName << "," << footballTeam[pos].name << endl;
-        cout << "2. Edit Position" << endl;
-        cout << "3. Edit Number of Touch Downs" << endl;
-        cout << "4. Edit Number of Catches" << endl;
-        cout << "5. Edit Number of Passing Yards" << endl;
-        cout << "6. Edit Number of Recieving Yards" << endl;
-        cout << "7. Edit Number of Rushing Yards" << endl;
-        cout << "8. Back to menu" << endl;
-        cout << "Enter Choice: ";
+       const int WIDTH = 80;
+	
+	cout << fixed << showpoint << setprecision(2);
+	cout << setfill('*') << setw(WIDTH) << "*" << endl;
+	cout << setfill(' ');
+	cout << "*";
+	cout << right << setw((WIDTH - 2) / 2) << "A6 STRUCT ";
+	cout << left << setw((WIDTH - 2) / 2) << " EDIT PLAYER";
+	cout << "*" << endl;
+	cout << "*";
+	cout << right << setw((WIDTH - 2) / 2) << "";
+	cout << left << setw((WIDTH - 2) / 2) << "";
+	cout << left << "*" << endl;
+	cout << left << setw(WIDTH / 2) << "*";
+	cout << right << setw(WIDTH / 2) << "*" << endl;
+	cout << left << setw(WIDTH - 50) << "*";
+	cout << right << setw(WIDTH - 66) << "";
+	cout << right << setw(WIDTH - 76);
+	cout << right << setw(WIDTH - 60);
+	cout << right << setw(WIDTH - 76);
+	cout << right << setw(WIDTH - 72) << "*" << endl;
+	cout << left << setw(WIDTH / 2) << "*";
+	cout << right << setw(WIDTH / 2) << "*" << endl;
+	cout << left << setw(WIDTH - 30) << "*";
+	cout << left << setw(WIDTH - 40) << "--PENDING VALUES";
+	cout << "*" << endl;
+	cout << left << setw(WIDTH - 42) << "* <1>  Edit Name";
+	cout << ">  --";
+	cout << left << setw(WIDTH - 40) << setw(5) << footballTeam[pos].lastName << ", " << footballTeam[pos].name;
+	cout << "" << endl;
+	cout << left << setw(WIDTH - 42) << "* <2>  Edit Position";
+	cout << ">  --";
+	cout << left << setw(WIDTH - 40) << footballTeam[pos].pos;
+	cout << "*" << endl;
+	cout << left << setw(WIDTH - 42) << "* <3>  Edit Number of Touch Downs";
+	cout << ">  --";
+	cout << left << setw(WIDTH - 40) << footballTeam[pos].touchDowns;
+	cout << "*" << endl;
+	cout << left << setw(WIDTH - 42) << "* <4>  Edit Number of Catches";
+	cout << ">  --";
+	cout << left << setw(WIDTH - 40) << footballTeam[pos].catches;
+	cout << "*" << endl;
+	cout << left << setw(WIDTH - 42) << "* <5>  Edit Number of Passing Yards";
+	cout << ">  --";
+	cout << left << setw(WIDTH - 40) << footballTeam[pos].passingYards;
+	cout << "*" << endl;
+	cout << left << setw(WIDTH - 42) << "* <6>  Edit Number of Receiving Yards";
+	cout << ">  --";
+	cout << left << setw(WIDTH - 40) << footballTeam[pos].recievingYards;
+	cout << "*" << endl;
+	cout << left << setw(WIDTH - 42) << "* <7>  Edit Number of Rushing Yards";
+	cout << ">  --";
+	cout << left << setw(WIDTH - 40) << footballTeam[pos].rushingYards;
+	cout << "*" << endl;
+	cout << left << setw(WIDTH - 42) << "* <8>  Return to Main Menu";
+	cout << "";
+	cout << left << setw(WIDTH - 40);
+	cout << "*" << endl;
+	cout << left << setw(WIDTH - 42) << "";
+	cout << right << setw(WIDTH - 36) << "*" << endl;
+	cout << left << setw(WIDTH - 44) << "";
+	cout << right << setw(WIDTH - 36) << "*" << endl;
+	cout << setfill('*') << setw(WIDTH) << "*" << endl;
+	cout << "\t\tChoice<0-8>: ";
         cin >> choice;
         cin.clear();
         cin.ignore();
@@ -254,7 +302,7 @@ void printTeamRoster(playerType footballTeam[], const int SIZE)
     cout << left << "Name" << setw(W + 7) << "Pos" << setw(W) << "TDs" << setw(W) << "Catches" << setw(W) << "Pass Yds" << setw(W) << "Recv Yds" << setw(W) << "Rush YDS" << endl;
     for (int i = 0; i < SIZE; i++)
     {
-        cout << "------------------" << endl;
+        cout << "---------------------------------------------------------------------------------------------------------------------------------------" << endl;
         cout << left << setw(10) << footballTeam[i].lastName << ", " << left << setw(W) << footballTeam[i].name << left << setw(W) << footballTeam[i].pos << left << setw(W) << footballTeam[i].catches << left << setw(W) << footballTeam[i].passingYards << left << setw(W) << footballTeam[i].recievingYards << left << setw(W) << footballTeam[i].rushingYards << endl;
     }
     cout << endl;
@@ -368,8 +416,10 @@ void menu(playerType footballTeam[], const int SIZE, ofstream &outFile, bool ifE
                 switch (save)
                 {
                 case 1:
+                    cout << "\033c";
                     menu(footballTeam, SIZE, outFile, ifExit);
                 case 2:
+                     cout << "\033c";
                     writeFile(outFile, footballTeam, SIZE);
                     return;
                 case 3:
