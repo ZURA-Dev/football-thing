@@ -89,18 +89,26 @@ int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
         cout << "Enter first/last name of player to look up" << endl;
         cout << "first: ";
         getline(cin, temp_name);
-        toLowerString(temp_name);
+        cin.clear();
         cout << "last: ";
         getline(cin, temp_lastName);
-        toLowerString(temp_lastName);
+        cin.clear();
+        
 
         for (int i = 0; i < SIZE; i++)
         {
+            temp_name = toLowerString(temp_name);
+            temp_lastName = toLowerString(temp_lastName);
             tempFootball[i].name = footballTeam[i].name;
             tempFootball[i].lastName = footballTeam[i].lastName;
-            tempFootball[i].name[i] = tolower(tempFootball[i].name[i]);
-            tempFootball[i].lastName[i] = tolower(tempFootball[i].lastName[i]);
+            tempFootball[i].name[0] = tolower(footballTeam[i].name[0]);
+            tempFootball[i].lastName[0] = tolower(footballTeam[i].lastName[0]);
         }
+        cout << tempFootball[2].name << endl;
+        cout << temp_name << endl;
+        cout << tempFootball[2].lastName << endl;
+        cout << temp_lastName << endl;
+        system("pause");
 
         for (int i = 0; i < SIZE; i++)
         {
@@ -386,25 +394,7 @@ int main()
     bool ifExit = false;
     playerType footballTeam[SIZE];
     readFile(footballTeam, inFile, SIZE);
-    // cin >> footballTeam[1].lastName;
-    // cin >> footballTeam[1].name;
-    // writeFile(outFile, footballTeam, SIZE);
-    menu(footballTeam, SIZE, outFile, ifExit);
-    // lookUpPlayer(footballTeam, SIZE);
-    // editPlayer(outFile, footballTeam, SIZE, ifExit);
+    lookUpPlayer(footballTeam, SIZE, ifExit);
 
     return 0;
 }
-/*for (int i = 0; i < SIZE; i++)
-{
-    cout << footballTeam[i].name << endl;
-    cout << footballTeam[i].lastName << endl;
-    cout << footballTeam[i].pos << endl;
-    cout << footballTeam[i].touchDowns << endl;
-    cout << footballTeam[i].catches << endl;
-    cout << footballTeam[i].passingYards << endl;
-    cout << footballTeam[i].recievingYards << endl;
-    cout << footballTeam[i].rushingYards << endl;
-};*/
-
-// writeFile(outFile, footballTeam, SIZE);
