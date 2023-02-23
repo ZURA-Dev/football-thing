@@ -101,12 +101,12 @@ int lookUpPlayer(playerType footballTeam[], const int SIZE, bool &ifExit)
             temp_lastName = toLowerString(temp_lastName);
             tempFootball[i].name = footballTeam[i].name;
             tempFootball[i].lastName = footballTeam[i].lastName;
-            tempFootball[i].name[0] = tolower(footballTeam[i].name[0]);
-            tempFootball[i].lastName[0] = tolower(footballTeam[i].lastName[0]);
+            tempFootball[i].name = toLowerString(footballTeam[i].name);
+            tempFootball[i].lastName = toLowerString(footballTeam[i].lastName);
         }
-        cout << tempFootball[2].name << endl;
+        cout << tempFootball[1].name << endl;
         cout << temp_name << endl;
-        cout << tempFootball[2].lastName << endl;
+        cout << tempFootball[1].lastName << endl;
         cout << temp_lastName << endl;
         system("pause");
 
@@ -394,7 +394,6 @@ int main()
     bool ifExit = false;
     playerType footballTeam[SIZE];
     readFile(footballTeam, inFile, SIZE);
-    lookUpPlayer(footballTeam, SIZE, ifExit);
-
+    menu(footballTeam,SIZE, outFile, ifExit);
     return 0;
 }
